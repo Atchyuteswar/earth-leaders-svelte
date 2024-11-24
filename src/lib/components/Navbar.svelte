@@ -38,73 +38,61 @@
   $: isResources = $page.url.pathname === '/resources';
 </script>
 
-<nav class="bg-white shadow-lg">
+<nav class="bg-white dark:bg-gray-800 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex">
         <div class="flex-shrink-0 flex items-center">
-          <a href="/" class="text-xl font-bold text-green-700">Earth Leaders</a>
+          <a href="/" class="text-xl font-bold text-green-700 dark:text-green-400">Earth Leaders</a>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
           <a
             href="/"
-            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isHome ? 'border-green-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}"
+            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isHome ? 'border-green-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
           >
             Home
           </a>
           <a
             href="/about"
-            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isAbout ? 'border-green-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}"
+            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isAbout ? 'border-green-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
           >
             About
           </a>
-          <a
-            href="/resources"
-            class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isResources ? 'border-green-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'}"
-          >
-            Resources
-          </a>
+          {#if $user}
+            <a
+              href="/resources"
+              class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isResources ? 'border-green-500 text-gray-900 dark:text-white' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
+            >
+              Resources
+            </a>
+          {/if}
         </div>
       </div>
-
       <div class="hidden sm:ml-6 sm:flex sm:items-center">
         {#if $user}
-          <div class="flex items-center space-x-4">
-            <span class="text-sm text-gray-700">Welcome, {$user.email}</span>
-            <button
-              on:click={handleSignOut}
-              disabled={loading}
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
-            >
-              {loading ? 'Signing out...' : 'Sign out'}
-            </button>
-          </div>
+          <button
+            on:click={handleSignOut}
+            class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            disabled={loading}
+          >
+            Sign Out
+          </button>
         {:else}
           <button
             on:click={handleSignIn}
+            class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
             disabled={loading}
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
           >
-            {#if loading}
-              <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Signing in...
-            {:else}
-              Sign in with Google
-            {/if}
+            Sign In with Google
           </button>
         {/if}
       </div>
-
-      <!-- Mobile menu button -->
-      <div class="flex items-center sm:hidden">
+      <div class="-mr-2 flex items-center sm:hidden">
         <button
           on:click={() => (isMenuOpen = !isMenuOpen)}
-          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
         >
-          <span class="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
+          <span class="sr-only">Open main menu</span>
           <svg
             class="h-6 w-6"
             fill="none"
@@ -112,67 +100,62 @@
             stroke="currentColor"
             aria-hidden="true"
           >
-            {#if isMenuOpen}
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            {:else}
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            {/if}
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Mobile menu -->
   {#if isMenuOpen}
     <div class="sm:hidden">
       <div class="pt-2 pb-3 space-y-1">
         <a
           href="/"
-          class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isHome ? 'bg-green-50 border-green-500 text-green-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'}"
+          class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isHome ? 'border-green-500 text-green-700 dark:text-green-400 bg-green-50 dark:bg-gray-900' : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
         >
           Home
         </a>
         <a
           href="/about"
-          class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isAbout ? 'bg-green-50 border-green-500 text-green-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'}"
+          class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isAbout ? 'border-green-500 text-green-700 dark:text-green-400 bg-green-50 dark:bg-gray-900' : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
         >
           About
         </a>
-        <a
-          href="/resources"
-          class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isResources ? 'bg-green-50 border-green-500 text-green-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'}"
-        >
-          Resources
-        </a>
-      </div>
-      <div class="pt-4 pb-3 border-t border-gray-200">
         {#if $user}
-          <div class="flex items-center px-4">
-            <div class="flex-shrink-0">
-              <span class="text-sm text-gray-700">Welcome, {$user.email}</span>
-            </div>
-          </div>
-          <div class="mt-3 space-y-1">
+          <a
+            href="/resources"
+            class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isResources ? 'border-green-500 text-green-700 dark:text-green-400 bg-green-50 dark:bg-gray-900' : 'border-transparent text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'}"
+          >
+            Resources
+          </a>
+        {/if}
+      </div>
+      <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+        <div class="mt-3 space-y-1">
+          {#if $user}
             <button
               on:click={handleSignOut}
+              class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               disabled={loading}
-              class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 disabled:opacity-50"
             >
-              {loading ? 'Signing out...' : 'Sign out'}
+              Sign Out
             </button>
-          </div>
-        {:else}
-          <div class="mt-3 space-y-1">
+          {:else}
             <button
               on:click={handleSignIn}
+              class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
               disabled={loading}
-              class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 disabled:opacity-50"
             >
-              {loading ? 'Signing in...' : 'Sign in with Google'}
+              Sign In with Google
             </button>
-          </div>
-        {/if}
+          {/if}
+        </div>
       </div>
     </div>
   {/if}
