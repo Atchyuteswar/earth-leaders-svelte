@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { getContext } from 'svelte';
 	import { user } from '$lib/stores/authStore';
+	import { invalidate, invalidateAll } from '$app/navigation';
 
 	let isMenuOpen = $state(false);
 	let loading = $state(false);
@@ -11,6 +12,9 @@
 		console.log('user', $user);
 		isUserLoggedIn = $user != null;
 		console.log('isUserLoggedIn', isUserLoggedIn);
+		
+		// Invalidate the session to check for user state changes
+		invalidate('app:user');
 	});
 
 	let isHome = $derived($page.url.pathname === '/');

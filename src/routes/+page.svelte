@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { user } from '$lib/stores/authStore';
 	import { onMount, setContext } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -44,6 +45,7 @@
 	$effect(() => {
 		console.log('user:', username);
 		setContext('user', username);
+		invalidate('user');
 	});
 </script>
 
@@ -52,7 +54,7 @@
 	<div class="relative overflow-hidden bg-white dark:bg-gray-900">
 		<div class="mx-auto max-w-7xl">
 			<div
-				class=" z-10 bg-white pb-8 dark:bg-gray-900 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
+				class="z-10 bg-white pb-8 dark:bg-gray-900 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
 			>
 				<main class="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-20">
 					<div class="sm:text-center lg:text-left">
@@ -91,8 +93,9 @@
 		<div class="relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
 			<!-- Image carousel controls -->
 			<button
-				class="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2.5 sm:p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 touch-manipulation"
+				class="absolute left-2 top-1/2 z-20 -translate-y-1/2 transform touch-manipulation rounded-full bg-white/80 p-2.5 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 sm:left-4 sm:p-2"
 				onclick={previousImage}
+				aria-label="Previous Image"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +113,9 @@
 				</svg>
 			</button>
 			<button
-				class="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2.5 sm:p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 touch-manipulation"
+				class="absolute right-2 top-1/2 z-20 -translate-y-1/2 transform touch-manipulation rounded-full bg-white/80 p-2.5 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 sm:right-4 sm:p-2"
 				onclick={nextImage}
+				aria-label="Next Image"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -147,6 +151,7 @@
 					<button
 						class="w-2.5 h-2.5 rounded-full transition-colors duration-200 {index === currentIndex ? 'bg-white' : 'bg-white/50'}"
 						onclick={() => (currentIndex = index)}
+						aria-label="Go to image {index + 1}"
 					></button>
 				{/each}
 			</div>

@@ -1,6 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
 import * as auth from "$lib/server/auth";
 import type { Actions, PageServerLoad } from "./$types";
+import { invalidateAll } from "$app/navigation";
 
 function validateEmail(email: unknown): email is string {
 	return typeof email === 'string' && email.includes('@') && email.length > 0;
@@ -37,19 +38,23 @@ export const actions: Actions = {
 			});
 		}
 
-		return auth.validateEmailPassword(email, password)
-			.then(async userId => {
-				const sessionToken = auth.generateSessionToken();
-				const session = await auth.createSession(sessionToken, userId);
-				auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-				return redirect(302, '/');
-			})
-			.catch((error) => {
-				console.error('Login error:', error);
-				return fail(400, {
-					error: 'Invalid email or password',
-					email
-				});
+		// Try to validate the email and password
+		let userId: string;
+		try {
+			userId = await auth.validateEmailPassword(email, password);
+		} catch (error) {
+			console.error('Login error:', error);
+			return fail(400, {
+				error: 'Invalid email or password',
+				email
 			});
+		}
+
+		// If we get here, the credentials are valid
+		const sessionToken = auth.generateSessionToken();
+		const session = await auth.createSession(sessionToken, userId);
+		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
+		
+		return redirect(302, '/');
 	}
 };

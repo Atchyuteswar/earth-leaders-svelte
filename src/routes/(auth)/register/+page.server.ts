@@ -24,24 +24,30 @@ export const actions: Actions = {
 			!email ||
 			!password
 		) {
+			console.log('Form validation failed:', {
+				username: typeof username,
+				email: typeof email,
+				password: typeof password
+			});
 			return fail(400, {
 				error: "Invalid form data"
 			});
 		}
 
-		return auth.createUser({ username, email, password })
-			.then(userId => {
-				const sessionToken = auth.generateSessionToken();
-				return auth.createSession(sessionToken, userId)
-					.then(session => {
-						auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-						return redirect(302, "/");
-					});
-			})
-			.catch(() => {
-				return fail(400, {
-					error: "Failed to create account"
-				});
+		let userId: string;
+		try {
+			userId = await auth.createUser({ username, email, password });
+			console.log('User created successfully:', { userId });
+		} catch (error) {
+			console.error('Failed to create account:', error);
+			return fail(400, {
+				error: "Failed to create account"
 			});
+		}
+
+		const sessionToken = auth.generateSessionToken();
+		const session = await auth.createSession(sessionToken, userId);
+		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
+		return redirect(302, "/");
 	}
 };
