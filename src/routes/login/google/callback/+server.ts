@@ -38,7 +38,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				sub: decodedToken.sub ?? '',
 				email: decodedToken.email ?? '',
 				name: decodedToken.name ?? '',
-			};
+			} as GoogleClaims;
 			return claims;
 		})
 		.then(async (claims) => {

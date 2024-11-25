@@ -43,7 +43,7 @@
 					>
 						About
 					</a>
-					{#if user}
+					{#if isUserLoggedIn}
 						<a
 							href="/resources"
 							class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium {isResources
@@ -144,7 +144,7 @@
 				>
 					About
 				</a>
-				{#if user}
+				{#if isUserLoggedIn}
 					<a
 						href="/resources"
 						class="block pl-3 pr-4 py-2 border-l-4 text-base font-medium {isResources
