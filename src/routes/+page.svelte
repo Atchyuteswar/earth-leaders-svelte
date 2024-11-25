@@ -49,10 +49,10 @@
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
 	<!-- Hero Section -->
-	<div class="relative overflow-hidden bg-white dark:bg-gray-800">
+	<div class="relative overflow-hidden bg-white dark:bg-gray-900">
 		<div class="mx-auto max-w-7xl">
 			<div
-				class="relative z-10 bg-white pb-8 dark:bg-gray-800 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
+				class=" z-10 bg-white pb-8 dark:bg-gray-900 sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32"
 			>
 				<main class="mx-auto mt-10 max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-20">
 					<div class="sm:text-center lg:text-left">
@@ -91,12 +91,12 @@
 		<div class="relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
 			<!-- Image carousel controls -->
 			<button
-				class="absolute left-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800"
+				class="absolute left-2 sm:left-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2.5 sm:p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 touch-manipulation"
 				onclick={previousImage}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
+					class="h-5 w-5 sm:h-6 sm:w-6"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -110,12 +110,12 @@
 				</svg>
 			</button>
 			<button
-				class="absolute right-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800"
+				class="absolute right-2 sm:right-4 top-1/2 z-20 -translate-y-1/2 transform rounded-full bg-white/80 p-2.5 sm:p-2 text-gray-800 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800 touch-manipulation"
 				onclick={nextImage}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
-					class="h-6 w-6"
+					class="h-5 w-5 sm:h-6 sm:w-6"
 					fill="none"
 					viewBox="0 0 24 24"
 					stroke="currentColor"
@@ -127,25 +127,25 @@
 			<!-- Image carousel -->
 			{#each images as image, index}
 				{#if index === currentIndex}
-					<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }} class="absolute inset-0">
+					<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }} class="relative h-64 sm:h-72 md:h-96 lg:absolute lg:inset-0">
 						<img
-							class="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full"
+							class="h-full w-full object-cover lg:h-full lg:w-full"
 							src={image.url}
 							alt={image.alt}
 						/>
 						<!-- Image overlay gradient -->
 						<div
-							class="pointer-events-none absolute inset-0 bg-gradient-to-r from-white dark:from-gray-800 lg:from-transparent"
+							class="pointer-events-none absolute inset-0 bg-gradient-to-r from-white via-white/20 to-transparent dark:from-gray-900 dark:via-gray-900/20 lg:from-transparent"
 						></div>
 					</div>
 				{/if}
 			{/each}
 
 			<!-- Carousel indicators -->
-			<div class="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 transform space-x-2">
+			<div class="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 transform space-x-3">
 				{#each images as _, index}
 					<button
-						class="w-2 h-2 rounded-full {index === currentIndex ? 'bg-white' : 'bg-white/50'}"
+						class="w-2.5 h-2.5 rounded-full transition-colors duration-200 {index === currentIndex ? 'bg-white' : 'bg-white/50'}"
 						onclick={() => (currentIndex = index)}
 					></button>
 				{/each}
@@ -154,7 +154,7 @@
 	</div>
 
 	<!-- Features Section -->
-	<div class="bg-white py-12 dark:bg-gray-800">
+	<div class="bg-white py-12 dark:bg-gray-900">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<div class="lg:text-center">
 				<h2
