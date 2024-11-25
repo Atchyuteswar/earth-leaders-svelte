@@ -6,11 +6,11 @@ import { fail } from "@sveltejs/kit";
 import type { RequestEvent } from "@sveltejs/kit";
 import type { OAuth2Tokens } from "arctic";
 
-interface GoogleClaims {
+type GoogleClaims = {
 	sub: string;
 	email: string;
 	name: string;
-}
+};
 
 export async function GET(event: RequestEvent): Promise<Response> {
 	const code = event.url.searchParams.get("code");
@@ -28,7 +28,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
 	return google.validateAuthorizationCode(code, codeVerifier)
 		.then((tokens: OAuth2Tokens) => {
-			const decodedToken = decodeIdToken(tokens.idToken());
+			const decodedToken: GoogleClaims = decodeIdToken(tokens.idToken());
 			console.info("Google OAuth token decoded", {
 				sub: decodedToken.sub,
 				email: decodedToken.email
@@ -37,7 +37,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 			const claims: GoogleClaims = {
 				sub: decodedToken.sub ?? '',
 				email: decodedToken.email ?? '',
-				name: decodedToken.name ?? ''
+				name: decodedToken.name ?? '',
 			};
 			return claims;
 		})

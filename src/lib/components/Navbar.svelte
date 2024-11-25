@@ -81,7 +81,7 @@
 				{/if}
 				<button
 					onclick={() => (isMenuOpen = !isMenuOpen)}
-					class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 dark:hover:bg-gray-700"
+					class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 dark:hover:bg-gray-700 sm:hidden"
 				>
 					<span class="sr-only">Open main menu</span>
 					<svg

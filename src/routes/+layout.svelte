@@ -9,8 +9,9 @@
 	import '../app.css';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import type { LayoutServerData } from './$types';
+	import type { Snippet } from 'svelte';
 	interface Props {
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 		data: LayoutServerData;
 	}
 

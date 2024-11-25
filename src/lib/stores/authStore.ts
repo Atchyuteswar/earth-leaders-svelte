@@ -1,6 +1,12 @@
 import { writable } from 'svelte/store';
-import type { User } from 'firebase/auth';
 
-export const user = writable();
+type User = {
+    id: string;
+    email: string;
+    username: string;
+    googleId?: string;
+};
+
+export const user = writable<User | null>();
 export const loading = writable(true);
 export const initialized = writable(false);
