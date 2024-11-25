@@ -142,7 +142,7 @@
 			{/each}
 
 			<!-- Carousel indicators -->
-			<div class="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 transform space-x-3">
+			<div class="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 transform space-x-3">
 				{#each images as _, index}
 					<button
 						class="w-2.5 h-2.5 rounded-full transition-colors duration-200 {index === currentIndex ? 'bg-white' : 'bg-white/50'}"
