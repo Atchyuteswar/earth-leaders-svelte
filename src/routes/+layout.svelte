@@ -10,6 +10,11 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import type { LayoutServerData } from './$types';
 	import type { Snippet } from 'svelte';
+	import { Button } from "$lib/components/ui/button/index.js";
+	import Sun from "lucide-svelte/icons/sun";
+	import Moon from "lucide-svelte/icons/moon";
+
+	
 	interface Props {
 		children?: Snippet;
 		data: LayoutServerData;
@@ -43,43 +48,17 @@
 	class="flex min-h-screen flex-col bg-white text-gray-900 transition-colors dark:bg-gray-900 dark:text-gray-100"
 >
 	<Navbar />
-	<button
-		class="fixed bottom-4 right-4 rounded-full bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
-		onclick={toggleMode}
-		aria-label="Toggle theme"
-	>
-		{#if $theme === 'dark'}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-				/>
-			</svg>
-		{:else}
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-				/>
-			</svg>
-		{/if}
-	</button>
+
+
+  <Button onclick={toggleMode} variant="outline" size="icon" class='fixed bottom-4 right-4 rounded-full bg-gray-200 p-2 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600'>
+    <Sun
+      class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+    />
+    <Moon
+      class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+    />
+    <span class="sr-only">Toggle theme</span>
+  </Button>
 	<main class="flex-grow">
 		{@render children?.()}
 	</main>
