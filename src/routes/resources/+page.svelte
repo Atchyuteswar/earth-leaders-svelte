@@ -2,6 +2,8 @@
   import { user } from '$lib/stores/authStore';
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
+  import { get, writable } from 'svelte/store';
+  import { browser } from '$app/environment';
 
   interface Action {
     id: string;
@@ -13,6 +15,25 @@
     icon: string;
     resources: { title: string; url: string }[];
   }
+
+const loginDays = writable<number[]>([]);
+
+onMount(() => {
+  if (browser) {
+    const storedLoginDays = JSON.parse(localStorage.getItem('loginDays') || '[]');
+    loginDays.set(storedLoginDays);
+
+    const today = new Date().toISOString().split('T')[0];
+    if (!storedLoginDays.includes(today)) {
+      storedLoginDays.push(today);
+      loginDays.set(storedLoginDays);
+      localStorage.setItem('loginDays', JSON.stringify(storedLoginDays));
+    }
+  }
+});
+
+$: daysLoggedIn = get(loginDays).length;
+$: hasCompleted21Days = daysLoggedIn >= 21;
 
   const actions: Action[] = [
     {
@@ -157,6 +178,27 @@
       </div>
     </div>
 
+    
+    <!-- 21-Day Tracker Section -->
+    <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">21-Day Login Tracker</h2>
+      <p class="mt-4 text-sm text-gray-500 dark:text-gray-400">
+        Log in daily for 21 days to earn a special badge!
+      </p>
+      <div class="mt-4 grid grid-cols-7 gap-4">
+        {#each Array(21) as _, index}
+          <div class="w-10 h-10 flex items-center justify-center rounded-full {index < daysLoggedIn ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-700'}">
+            {index + 1}
+          </div>
+        {/each}
+      </div>
+      {#if hasCompleted21Days}
+        <div class="mt-4 p-4 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 rounded-lg">
+          🎉 Congratulations! You've earned the 21-day login badge!
+        </div>
+      {/if}
+    </div>
+
     <!-- Action Cards -->
     <div class="mt-12 mb-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {#each filteredActions as action (action.id)}
@@ -255,5 +297,6 @@
         </p>
       </div>
     </div>
+
   </div>
 </div>
