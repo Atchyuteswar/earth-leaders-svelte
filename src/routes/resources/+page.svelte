@@ -16,24 +16,24 @@
     resources: { title: string; url: string }[];
   }
 
-const loginDays = writable<number[]>([]);
+  const loginDays = writable<number[]>([]);
 
-onMount(() => {
-  if (browser) {
-    const storedLoginDays = JSON.parse(localStorage.getItem('loginDays') || '[]');
-    loginDays.set(storedLoginDays);
-
-    const today = new Date().toISOString().split('T')[0];
-    if (!storedLoginDays.includes(today)) {
-      storedLoginDays.push(today);
+  onMount(() => {
+    if (browser) {
+      const storedLoginDays = JSON.parse(localStorage.getItem('loginDays') || '[]');
       loginDays.set(storedLoginDays);
-      localStorage.setItem('loginDays', JSON.stringify(storedLoginDays));
-    }
-  }
-});
 
-$: daysLoggedIn = get(loginDays).length;
-$: hasCompleted21Days = daysLoggedIn >= 21;
+      const today = new Date().toISOString().split('T')[0];
+      if (!storedLoginDays.includes(today)) {
+        storedLoginDays.push(today);
+        loginDays.set(storedLoginDays);
+        localStorage.setItem('loginDays', JSON.stringify(storedLoginDays));
+      }
+    }
+  });
+
+  $: daysLoggedIn = get(loginDays).length;
+  $: hasCompleted21Days = daysLoggedIn >= 21;
 
   const actions: Action[] = [
     {
@@ -178,7 +178,6 @@ $: hasCompleted21Days = daysLoggedIn >= 21;
       </div>
     </div>
 
-    
     <!-- 21-Day Tracker Section -->
     <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">21-Day Login Tracker</h2>
@@ -297,6 +296,5 @@ $: hasCompleted21Days = daysLoggedIn >= 21;
         </p>
       </div>
     </div>
-
   </div>
 </div>
